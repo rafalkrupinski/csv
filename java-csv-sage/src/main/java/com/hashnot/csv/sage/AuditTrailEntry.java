@@ -1,6 +1,7 @@
 package com.hashnot.csv.sage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hashnot.csv.sage.convert.LocalDateDeserializer;
@@ -11,9 +12,15 @@ import com.hashnot.csv.sage.convert.TaxCodeSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.hashnot.csv.sage.AuditTrailEntry.*;
+
 /**
  * @author Rafał Krupiński
  */
+@JsonPropertyOrder({
+        H_TYPE, H_ACCOUNT_REFERENCE, H_NOMINAL_AC_REF, H_DEPARTMENT_CODE, H_DATE, H_REFERENCE, H_DETAILS, H_NET_AMOUNT,
+        H_TAX_CODE, H_TAX_AMOUNT, H_EXCHANGE_RATE, H_EXTRA_REFERENCE, H_USER_NAME, H_PROJECT_REFN, H_COST_CODE_REFN
+})
 public class AuditTrailEntry {
     public static final String H_TYPE = "Type";
     public static final String H_ACCOUNT_REFERENCE = "Account Reference";
@@ -31,54 +38,54 @@ public class AuditTrailEntry {
     public static final String H_PROJECT_REFN = "Project Refn";
     public static final String H_COST_CODE_REFN = "Cost Code Refn";
 
-    @JsonProperty(value = H_TYPE, required = true, index = 0)
+    @JsonProperty(value = H_TYPE, required = true)
     private AuditTrailEntryType type;
 
-    @JsonProperty(value = H_ACCOUNT_REFERENCE, required = true, index = 1)
+    @JsonProperty(value = H_ACCOUNT_REFERENCE, required = true)
     private String accountReference;
 
-    @JsonProperty(value = H_NOMINAL_AC_REF, required = true, index = 2)
+    @JsonProperty(value = H_NOMINAL_AC_REF, required = true)
     private int nominalACRef;
 
-    @JsonProperty(value = H_DEPARTMENT_CODE, required = false, index = 3)
+    @JsonProperty(H_DEPARTMENT_CODE)
     private Integer departmentCode;
 
-    @JsonProperty(value = H_DATE, required = true, index = 4)
+    @JsonProperty(value = H_DATE, required = true)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
-    @JsonProperty(value = H_REFERENCE, required = false, index = 5)
+    @JsonProperty(H_REFERENCE)
     private String reference;
 
-    @JsonProperty(value = H_DETAILS, required = false, index = 6)
+    @JsonProperty(H_DETAILS)
     private String details;
 
-    @JsonProperty(value = H_NET_AMOUNT, required = true, index = 7)
+    @JsonProperty(value = H_NET_AMOUNT, required = true)
     private BigDecimal netAmount;
 
     // store as "T"+code
-    @JsonProperty(value = H_TAX_CODE, required = true, index = 8)
+    @JsonProperty(value = H_TAX_CODE, required = true)
     @JsonSerialize(using = TaxCodeSerializer.class)
     @JsonDeserialize(using = TaxCodeDeserializer.class)
     private int taxCode;
 
-    @JsonProperty(value = H_TAX_AMOUNT, required = true, index = 9)
+    @JsonProperty(value = H_TAX_AMOUNT, required = true)
     private BigDecimal taxAmount;
 
-    @JsonProperty(value = H_EXCHANGE_RATE, required = false, index = 10)
+    @JsonProperty(H_EXCHANGE_RATE)
     private BigDecimal exchangeRate;
 
-    @JsonProperty(value = H_EXTRA_REFERENCE, required = false, index = 11)
+    @JsonProperty(H_EXTRA_REFERENCE)
     private String extraReference;
 
-    @JsonProperty(value = H_USER_NAME, required = false, index = 12)
+    @JsonProperty(H_USER_NAME)
     private String userName;
 
-    @JsonProperty(value = H_PROJECT_REFN, required = false, index = 13)
+    @JsonProperty(H_PROJECT_REFN)
     private String projectReference;
 
-    @JsonProperty(value = H_COST_CODE_REFN, required = false, index = 14)
+    @JsonProperty(H_COST_CODE_REFN)
     private String costCodeReference;
 
     public AuditTrailEntry() {

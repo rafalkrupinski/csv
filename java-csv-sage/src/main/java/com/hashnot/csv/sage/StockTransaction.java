@@ -1,6 +1,7 @@
 package com.hashnot.csv.sage;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.hashnot.csv.sage.convert.LocalDateDeserializer;
@@ -10,9 +11,15 @@ import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.hashnot.csv.sage.StockTransaction.*;
+
 /**
  * @author Rafał Krupiński
  */
+@JsonPropertyOrder({
+        H_TYPE, H_STOCK_CODE, H_DATE, H_REFERENCE, H_DETAILS, H_QUANTITY, H_COST_PRICE, H_SALES_PRICE, H_PROJECT_REFN,
+        H_COST_CODE_REFN
+})
 public class StockTransaction {
     public static final String H_TYPE = "Type";
     public static final String H_STOCK_CODE = "Stock Code";
@@ -25,37 +32,37 @@ public class StockTransaction {
     public static final String H_PROJECT_REFN = "Project Refn";
     public static final String H_COST_CODE_REFN = "Cost Code Refn";
 
-    @JsonProperty(value = H_TYPE, required = true, index = 0)
+    @JsonProperty(value = H_TYPE, required = true)
     public StockTransactionType type;
 
-    @JsonProperty(value = H_STOCK_CODE, required = true, index = 1)
+    @JsonProperty(value = H_STOCK_CODE, required = true)
     public String stockCode;
 
-    @JsonProperty(value = H_DATE, required = true, index = 2)
+    @JsonProperty(value = H_DATE, required = true)
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     public LocalDate date;
 
-    @JsonProperty(value = H_REFERENCE, required = false, index = 3)
+    @JsonProperty(H_REFERENCE)
     public String reference;
 
-    @JsonProperty(value = H_DETAILS, required = false, index = 4)
+    @JsonProperty(H_DETAILS)
     public String details;
 
-    @JsonProperty(value = H_QUANTITY, required = true, index = 5)
+    @JsonProperty(value = H_QUANTITY, required = true)
     @JsonSerialize(using = PlainStringBigDecimalSerializer.class)
     public BigDecimal quantity;
 
-    @JsonProperty(value = H_COST_PRICE, required = false, index = 6)
+    @JsonProperty(H_COST_PRICE)
     public BigDecimal costPrice;
 
-    @JsonProperty(value = H_SALES_PRICE, required = false, index = 7)
+    @JsonProperty(H_SALES_PRICE)
     public BigDecimal salesPrice;
 
-    @JsonProperty(value = H_PROJECT_REFN, required = false, index = 8)
+    @JsonProperty(H_PROJECT_REFN)
     public String projectRefn;
 
-    @JsonProperty(value = H_COST_CODE_REFN, required = false, index = 9)
+    @JsonProperty(H_COST_CODE_REFN)
     public String costCodeRefn;
 
     public StockTransaction() {
