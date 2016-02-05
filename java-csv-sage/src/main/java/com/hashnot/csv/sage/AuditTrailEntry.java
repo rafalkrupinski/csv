@@ -81,6 +81,19 @@ public class AuditTrailEntry {
     @JsonProperty(value = H_COST_CODE_REFN, required = false, index = 14)
     private String costCodeReference;
 
+    public AuditTrailEntry() {
+    }
+
+    public AuditTrailEntry(AuditTrailEntryType type, String accountReference, int nominalACRef, LocalDate date, BigDecimal netAmount, int taxCode, BigDecimal taxAmount) {
+        this.type = type;
+        this.accountReference = accountReference;
+        this.nominalACRef = nominalACRef;
+        this.date = date;
+        this.netAmount = netAmount;
+        this.taxCode = taxCode;
+        this.taxAmount = taxAmount;
+    }
+
     public AuditTrailEntryType getType() {
         return type;
     }

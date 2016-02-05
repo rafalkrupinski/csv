@@ -58,6 +58,16 @@ public class StockTransaction {
     @JsonProperty(value = H_COST_CODE_REFN, required = false, index = 9)
     public String costCodeRefn;
 
+    public StockTransaction() {
+    }
+
+    public StockTransaction(StockTransactionType type, String stockCode, LocalDate date, BigDecimal quantity) {
+        this.type = type;
+        this.stockCode = stockCode;
+        this.date = date;
+        this.quantity = quantity;
+    }
+
     public StockTransactionType getType() {
         return type;
     }
