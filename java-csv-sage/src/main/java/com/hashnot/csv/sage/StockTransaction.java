@@ -21,6 +21,8 @@ import static com.hashnot.csv.sage.StockTransaction.*;
         H_COST_CODE_REFN
 })
 public class StockTransaction {
+    final public static int PRICE_SCALE = 3;
+
     public static final String H_TYPE = "Type";
     public static final String H_STOCK_CODE = "Stock Code";
     public static final String H_DATE = "Date";
