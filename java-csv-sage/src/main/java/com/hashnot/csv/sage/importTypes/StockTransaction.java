@@ -1,9 +1,10 @@
-package com.hashnot.csv.sage;
+package com.hashnot.csv.sage.importTypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hashnot.csv.sage.StockTransactionType;
 import com.hashnot.csv.sage.convert.LocalDateDeserializer;
 import com.hashnot.csv.sage.convert.LocalDateSerializer;
 import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
@@ -11,7 +12,7 @@ import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static com.hashnot.csv.sage.StockTransaction.*;
+import static com.hashnot.csv.sage.importTypes.StockTransaction.*;
 
 /**
  * @author Rafał Krupiński
