@@ -13,6 +13,7 @@ import com.hashnot.csv.sage.convert.TaxCodeSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.hashnot.csv.sage.CommonField.*;
 import static com.hashnot.csv.sage.importTypes.AuditTrailEntry.*;
 
 /**
@@ -23,15 +24,10 @@ import static com.hashnot.csv.sage.importTypes.AuditTrailEntry.*;
         H_TAX_CODE, H_TAX_AMOUNT, H_EXCHANGE_RATE, H_EXTRA_REFERENCE, H_USER_NAME, H_PROJECT_REFN, H_COST_CODE_REFN
 })
 public class AuditTrailEntry {
-    public static final String H_TYPE = "Type";
     public static final String H_ACCOUNT_REFERENCE = "Account Reference";
     public static final String H_NOMINAL_AC_REF = "Nominal A/C Ref";
     public static final String H_DEPARTMENT_CODE = "Department Code";
-    public static final String H_DATE = "Date";
-    public static final String H_REFERENCE = "Reference";
-    public static final String H_DETAILS = "Details";
     public static final String H_NET_AMOUNT = "Net Amount";
-    public static final String H_TAX_CODE = "Tax Code";
     public static final String H_TAX_AMOUNT = "Tax Amount";
     public static final String H_EXCHANGE_RATE = "Exchange Rate";
     public static final String H_EXTRA_REFERENCE = "Extra Reference";

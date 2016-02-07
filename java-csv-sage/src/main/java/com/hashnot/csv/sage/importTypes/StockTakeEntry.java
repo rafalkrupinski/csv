@@ -9,17 +9,13 @@ import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
-import static com.hashnot.csv.sage.importTypes.StockTakeEntry.*;
+import static com.hashnot.csv.sage.CommonField.*;
 
 /**
  * @author Rafał Krupiński
  */
 @JsonPropertyOrder({H_STOCK_CODE, H_DATE, H_REFERENCE, H_ACTUAL})
 public class StockTakeEntry {
-    public static final String H_STOCK_CODE = "Stock Code";
-    public static final String H_DATE = "Date";
-    public static final String H_REFERENCE = "Reference";
-    public static final String H_ACTUAL = "Actual";
 
     @JsonProperty(value = H_STOCK_CODE, required = true)
     private String stockCode;

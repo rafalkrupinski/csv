@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hashnot.csv.sage.CommonField;
 import com.hashnot.csv.sage.StockTransactionType;
 import com.hashnot.csv.sage.convert.LocalDateDeserializer;
 import com.hashnot.csv.sage.convert.LocalDateSerializer;
@@ -12,6 +13,7 @@ import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.hashnot.csv.sage.CommonField.*;
 import static com.hashnot.csv.sage.importTypes.StockTransaction.*;
 
 /**
@@ -24,14 +26,6 @@ import static com.hashnot.csv.sage.importTypes.StockTransaction.*;
 public class StockTransaction {
     final public static int PRICE_SCALE = 3;
 
-    public static final String H_TYPE = "Type";
-    public static final String H_STOCK_CODE = "Stock Code";
-    public static final String H_DATE = "Date";
-    public static final String H_REFERENCE = "Reference";
-    public static final String H_DETAILS = "Details";
-    public static final String H_QUANTITY = "Quantity";
-    public static final String H_COST_PRICE = "Cost Price";
-    public static final String H_SALES_PRICE = "Sales Price";
     public static final String H_PROJECT_REFN = "Project Refn";
     public static final String H_COST_CODE_REFN = "Cost Code Refn";
 
