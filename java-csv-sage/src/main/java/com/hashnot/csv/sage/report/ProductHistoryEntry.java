@@ -2,14 +2,16 @@ package com.hashnot.csv.sage.report;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.hashnot.csv.sage.convert.LocalDateSerializer;
-import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 import com.hashnot.csv.sage.StockTransactionType;
+import com.hashnot.csv.sage.convert.LocalDateDeserializer;
+import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import static com.hashnot.csv.sage.CommonField.*;
 import static com.hashnot.csv.sage.report.ProductHistoryEntry.*;
 
 /**
@@ -20,17 +22,7 @@ import static com.hashnot.csv.sage.report.ProductHistoryEntry.*;
         H_SALES_PRICE, H_QUANTITY_IN_STOCK, H_QUANTITY_ON_ORDER, H_QUANTITY_ALLOCATED
 })
 public class ProductHistoryEntry {
-    public static final String H_STOCK_CODE = "Stock Code";
-    public static final String H_DESCRIPTION = "Description";
-    public static final String H_TYPE = "Type";
-    public static final String H_DATE = "Date";
-    public static final String H_REFERENCE = "Reference";
-    public static final String H_DETAILS = "Details";
-    public static final String H_QUANTITY = "Quantity";
     public static final String H_QUANTITY_USED = "Quantity used";
-    public static final String H_COST_PRICE = "Cost Price";
-    public static final String H_SALES_PRICE = "Sales Price";
-    public static final String H_QUANTITY_IN_STOCK = "Quantity in Stock";
     public static final String H_QUANTITY_ON_ORDER = "Quantity on Order";
     public static final String H_QUANTITY_ALLOCATED = "Quantity Allocated";
 
@@ -44,7 +36,7 @@ public class ProductHistoryEntry {
     private StockTransactionType type;
 
     @JsonProperty(H_DATE)
-    @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
     @JsonProperty(H_REFERENCE)
@@ -82,6 +74,15 @@ public class ProductHistoryEntry {
     private BigDecimal quantityAllocated;
 
     public ProductHistoryEntry() {
+    }
+
+    public ProductHistoryEntry(String stockCode, String description, BigDecimal quantity, BigDecimal quantityInStock, BigDecimal quantityOnOrder, BigDecimal quantityAllocated) {
+        this.stockCode = stockCode;
+        this.description = description;
+        this.quantity = quantity;
+        this.quantityInStock = quantityInStock;
+        this.quantityOnOrder = quantityOnOrder;
+        this.quantityAllocated = quantityAllocated;
     }
 
     @Override
@@ -125,13 +126,18 @@ public class ProductHistoryEntry {
         return result;
     }
 
-    public ProductHistoryEntry(String stockCode, String description, BigDecimal quantity, BigDecimal quantityInStock, BigDecimal quantityOnOrder, BigDecimal quantityAllocated) {
-        this.stockCode = stockCode;
-        this.description = description;
-        this.quantity = quantity;
-        this.quantityInStock = quantityInStock;
-        this.quantityOnOrder = quantityOnOrder;
-        this.quantityAllocated = quantityAllocated;
+    @Override
+    public String toString() {
+        return "ProductHistoryEntry{" +
+                "stockCode='" + stockCode + '\'' +
+                ", type=" + type +
+                ", date=" + date +
+                ", reference='" + reference + '\'' +
+                ", details='" + details + '\'' +
+                ", quantity=" + quantity +
+                ", costPrice=" + costPrice +
+                ", salesPrice=" + salesPrice +
+                '}';
     }
 
     public String getStockCode() {
