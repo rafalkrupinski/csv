@@ -2,7 +2,9 @@ package com.hashnot.csv.sage.importTypes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hashnot.csv.sage.convert.LocalDateDeserializer;
 import com.hashnot.csv.sage.convert.LocalDateSerializer;
 import com.hashnot.csv.sage.convert.PlainStringBigDecimalSerializer;
 
@@ -22,6 +24,7 @@ public class StockTakeEntry {
 
     @JsonProperty(value = H_DATE, required = true)
     @JsonSerialize(using = LocalDateSerializer.class)
+    @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDate date;
 
     @JsonProperty(H_REFERENCE)
