@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.hashnot.csv.paypal.convert.BigDecimalDeserializer;
 import com.hashnot.csv.paypal.convert.StatusDeserializer;
 
 import java.math.BigDecimal;
@@ -101,12 +102,15 @@ public class Transaction {
     private String currency;
 
     @JsonProperty(value = F_GROSS, required = true)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal gross;
 
     @JsonProperty(value = F_FEE, required = true)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal fee;
 
     @JsonProperty(value = F_NET, required = true)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal net;
 
     @JsonProperty(F_NOTE)
@@ -137,18 +141,23 @@ public class Transaction {
     private String itemId;
 
     @JsonProperty(F_SHIPPING_AMOUNT)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal shipping;
 
     @JsonProperty(F_INSURANCE_AMOUNT)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal insurance;
 
     @JsonProperty(F_SALES_TAX)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal salesTax;
 
     @JsonProperty(F_TIP)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal tip;
 
     @JsonProperty(F_DISCOUNT)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal discount;
 
     @JsonProperty(F_OPTION_1_NAME)
@@ -191,6 +200,7 @@ public class Transaction {
     private String receiptId;
 
     @JsonProperty(value = F_BALANCE, required = true)
+    @JsonDeserialize(using = BigDecimalDeserializer.class)
     private BigDecimal balance;
 
     @JsonProperty(F_ADDRESS_LINE_1)
@@ -226,6 +236,7 @@ public class Transaction {
         Canceled,
         Completed,
         PartiallyRefunded,
+        Placed,
         Refunded,
         Removed
     }
