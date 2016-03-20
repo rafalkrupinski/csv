@@ -3,6 +3,8 @@ package com.hashnot.csv.paypal;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.hashnot.csv.paypal.convert.StatusDeserializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -89,6 +91,7 @@ public class Transaction {
     private String type;
 
     @JsonProperty(value = F_STATUS, required = true)
+    @JsonDeserialize(using = StatusDeserializer.class)
     private Status status;
 
     @JsonProperty(F_SUBJECT)

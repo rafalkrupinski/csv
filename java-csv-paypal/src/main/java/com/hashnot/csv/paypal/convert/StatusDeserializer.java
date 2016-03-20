@@ -10,7 +10,7 @@ import java.io.IOException;
 /**
  * @author Rafał Krupiński
  */
-public class StatusConverter extends JsonDeserializer<Status> {
+public class StatusDeserializer extends JsonDeserializer<Status> {
     @Override
     public Status deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
         String value = p.getValueAsString();
