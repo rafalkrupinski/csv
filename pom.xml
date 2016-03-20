@@ -11,6 +11,7 @@
 
     <modules>
         <module>java-csv-sage</module>
+        <module>java-csv-paypal</module>
     </modules>
 
     <properties>
