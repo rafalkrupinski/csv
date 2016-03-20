@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.util.TimeZone;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,7 +28,7 @@ public class TransactionTest {
         Transaction tx = mappingIterator.next();
         assertEquals(LocalDate.of(2016, 3, 18), tx.getDate());
         assertEquals(LocalTime.of(21, 12, 4), tx.getTime());
-        assertEquals(ZoneId.of("GMT"), tx.getTimeZone());
+        assertEquals(TimeZone.getTimeZone("IST"), tx.getTimeZone());
         assertEquals(Transaction.Direction.Credit, tx.getBalanceImpact());
     }
 }

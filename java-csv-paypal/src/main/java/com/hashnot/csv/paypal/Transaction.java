@@ -10,7 +10,7 @@ import com.hashnot.csv.paypal.convert.StatusDeserializer;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.ZoneId;
+import java.util.TimeZone;
 
 import static com.hashnot.csv.paypal.Transaction.*;
 
@@ -74,16 +74,17 @@ public class Transaction {
     public static final String F_COUNTRY = "Country";
     public static final String F_PHONE_NUMBER = "Contact Phone Number";
     public static final String F_BALANCE_IMPACT = "Balance Impact";
+    public static final String DATE_FORMAT = "dd/MM/yyyy";
 
     @JsonProperty(value = F_DATE, required = true)
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = DATE_FORMAT)
     private LocalDate date;
 
     @JsonProperty(value = F_TIME, required = false)
     private LocalTime time;
 
     @JsonProperty(value = F_TIME_ZONE, required = true)
-    private ZoneId timeZone;
+    private TimeZone timeZone;
 
     @JsonProperty(value = F_NAME, required = true)
     private String name;
@@ -182,6 +183,7 @@ public class Transaction {
     private String itemUrl;
 
     @JsonProperty(F_CLOSING_DATE)
+    @JsonFormat(pattern = DATE_FORMAT)
     private LocalDate closingDate;
 
     @JsonProperty(F_REFERENCE_TXN)
@@ -257,11 +259,11 @@ public class Transaction {
         this.time = time;
     }
 
-    public ZoneId getTimeZone() {
+    public TimeZone getTimeZone() {
         return timeZone;
     }
 
-    public void setTimeZone(ZoneId timeZone) {
+    public void setTimeZone(TimeZone timeZone) {
         this.timeZone = timeZone;
     }
 
