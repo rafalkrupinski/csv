@@ -104,14 +104,17 @@ public class Transaction {
 
     @JsonProperty(value = F_GROSS, required = true)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal gross;
 
     @JsonProperty(value = F_FEE, required = true)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal fee;
 
     @JsonProperty(value = F_NET, required = true)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal net;
 
     @JsonProperty(F_NOTE)
@@ -143,22 +146,27 @@ public class Transaction {
 
     @JsonProperty(F_SHIPPING_AMOUNT)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal shipping;
 
     @JsonProperty(F_INSURANCE_AMOUNT)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal insurance;
 
     @JsonProperty(F_SALES_TAX)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal salesTax;
 
     @JsonProperty(F_TIP)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal tip;
 
     @JsonProperty(F_DISCOUNT)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal discount;
 
     @JsonProperty(F_OPTION_1_NAME)
@@ -203,6 +211,7 @@ public class Transaction {
 
     @JsonProperty(value = F_BALANCE, required = true)
     @JsonDeserialize(using = BigDecimalDeserializer.class)
+    @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal balance;
 
     @JsonProperty(F_ADDRESS_LINE_1)
@@ -236,6 +245,7 @@ public class Transaction {
 
     public enum Status {
         Canceled,
+        Cleared,
         Completed,
         PartiallyRefunded,
         Placed,
