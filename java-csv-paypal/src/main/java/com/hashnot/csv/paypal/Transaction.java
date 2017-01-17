@@ -238,6 +238,21 @@ public class Transaction {
     @JsonProperty(value = F_BALANCE_IMPACT, required = true)
     private Direction balanceImpact;
 
+    public enum Direction {
+        Credit,
+        Debit
+    }
+
+    public enum Status {
+        Canceled,
+        Cleared,
+        Completed,
+        PartiallyRefunded,
+        Placed,
+        Refunded,
+        Removed
+    }
+
     public LocalDate getDate() {
         return date;
     }

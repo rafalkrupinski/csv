@@ -29,6 +29,6 @@ public class TransactionTest {
         assertEquals(LocalDate.of(2016, 3, 18), tx.getDate());
         assertEquals(LocalTime.of(21, 12, 4), tx.getTime());
         assertEquals(TimeZone.getTimeZone("IST"), tx.getTimeZone());
-        assertEquals(Direction.Credit, tx.getBalanceImpact());
+        assertEquals(Transaction.Direction.Credit, tx.getBalanceImpact());
     }
 }
