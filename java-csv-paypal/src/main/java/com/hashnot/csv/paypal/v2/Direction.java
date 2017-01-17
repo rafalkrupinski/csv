@@ -1,4 +1,4 @@
-package com.hashnot.csv.paypal;
+package com.hashnot.csv.paypal.v2;
 
 /**
  * @author Rafał Krupiński

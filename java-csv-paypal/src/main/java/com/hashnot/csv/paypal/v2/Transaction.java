@@ -4,16 +4,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.hashnot.csv.paypal.Direction;
 import com.hashnot.csv.paypal.convert.BigDecimalDeserializer;
-import com.hashnot.csv.paypal.convert.StatusDeserializer;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.TimeZone;
 
-import static com.hashnot.csv.paypal.v2.TransactionV2.*;
+import static com.hashnot.csv.paypal.v2.Transaction.*;
 
 /**
  * @author Rafał Krupiński
@@ -27,50 +25,50 @@ import static com.hashnot.csv.paypal.v2.TransactionV2.*;
         F_QUANTITY, F_RECEIPT_ID, F_BALANCE, F_ADDRESS_LINE_1, F_ADDRESS_LINE_2, F_CITY, F_REGION, F_POSTAL_CODE, F_COUNTRY,
         F_PHONE_NUMBER, F_SUBJECT, F_NOTE, F_COUNTRY_CODE, F_BALANCE_IMPACT
 })
-public class TransactionV2 {
-    public static final String F_DATE = "Date";
-    public static final String F_TIME = "Time";
-    public static final String F_TIME_ZONE = "Time Zone";
-    public static final String F_NAME = "Name";
-    public static final String F_TYPE = "Type";
-    public static final String F_STATUS = "Status";
-    public static final String F_SUBJECT = "Subject";
-    public static final String F_CURRENCY = "Currency";
-    public static final String F_GROSS = "Gross";
-    public static final String F_FEE = "Fee";
-    public static final String F_NET = "Net";
-    public static final String F_NOTE = "Note";
-    public static final String F_FROM_EMAIL_ADDRESS = "From Email Address";
-    public static final String F_TO_EMAIL_ADDRESS = "To Email Address";
-    public static final String F_TRANSACTION_ID = "Transaction ID";
-    public static final String F_SHIPPING_ADDRESS = "Shipping Address";
-    public static final String F_ADDRESS_STATUS = "Address Status";
-    public static final String F_ITEM_TITLE = "Item title";
-    public static final String F_ITEM_ID = "Item ID";
-    public static final String F_SHIPPING_AMOUNT = "Shipping and Handling Amount";
-    public static final String F_INSURANCE_AMOUNT = "Insurance Amount";
-    public static final String F_SALES_TAX = "Sales Tax";
-    public static final String F_OPTION_1_NAME = "Option 1 Name";
-    public static final String F_OPTION_1_VALUE = "Option 1 Value";
-    public static final String F_OPTION_2_NAME = "Option 2 Name";
-    public static final String F_OPTION_2_VALUE = "Option 2 Value";
-    public static final String F_REFERENCE_TXN = "Reference Txn";
-    public static final String F_INVOICE_NUMBER = "Invoice Number";
-    public static final String F_CUSTOM_NUMBER = "Custom Number";
-    public static final String F_QUANTITY = "Quantity";
-    public static final String F_RECEIPT_ID = "Receipt ID";
-    public static final String F_BALANCE = "Balance";
-    public static final String F_ADDRESS_LINE_1 = "Address Line 1";
-    public static final String F_ADDRESS_LINE_2 = "Address Line 2/District/Neighborhood";
-    public static final String F_CITY = "Town/City";
-    public static final String F_REGION = "State/Province/Region/County/Territory/Prefecture/Republic";
-    public static final String F_POSTAL_CODE = "Zip/Postal Code";
-    public static final String F_COUNTRY = "Country";
-    public static final String F_COUNTRY_CODE = "Country Code";
-    public static final String F_PHONE_NUMBER = "Contact Phone Number";
-    public static final String F_BALANCE_IMPACT = "Balance Impact";
+public class Transaction {
+    static final String F_DATE = "Date";
+    static final String F_TIME = "Time";
+    static final String F_TIME_ZONE = "Time Zone";
+    static final String F_NAME = "Name";
+    static final String F_TYPE = "Type";
+    static final String F_STATUS = "Status";
+    static final String F_SUBJECT = "Subject";
+    static final String F_CURRENCY = "Currency";
+    static final String F_GROSS = "Gross";
+    static final String F_FEE = "Fee";
+    static final String F_NET = "Net";
+    static final String F_NOTE = "Note";
+    static final String F_FROM_EMAIL_ADDRESS = "From Email Address";
+    static final String F_TO_EMAIL_ADDRESS = "To Email Address";
+    static final String F_TRANSACTION_ID = "Transaction ID";
+    static final String F_SHIPPING_ADDRESS = "Shipping Address";
+    static final String F_ADDRESS_STATUS = "Address Status";
+    static final String F_ITEM_TITLE = "Item title";
+    static final String F_ITEM_ID = "Item ID";
+    static final String F_SHIPPING_AMOUNT = "Shipping and Handling Amount";
+    static final String F_INSURANCE_AMOUNT = "Insurance Amount";
+    static final String F_SALES_TAX = "Sales Tax";
+    static final String F_OPTION_1_NAME = "Option 1 Name";
+    static final String F_OPTION_1_VALUE = "Option 1 Value";
+    static final String F_OPTION_2_NAME = "Option 2 Name";
+    static final String F_OPTION_2_VALUE = "Option 2 Value";
+    static final String F_REFERENCE_TXN = "Reference Txn";
+    static final String F_INVOICE_NUMBER = "Invoice Number";
+    static final String F_CUSTOM_NUMBER = "Custom Number";
+    static final String F_QUANTITY = "Quantity";
+    static final String F_RECEIPT_ID = "Receipt ID";
+    static final String F_BALANCE = "Balance";
+    static final String F_ADDRESS_LINE_1 = "Address Line 1";
+    static final String F_ADDRESS_LINE_2 = "Address Line 2/District/Neighborhood";
+    static final String F_CITY = "Town/City";
+    static final String F_REGION = "State/Province/Region/County/Territory/Prefecture/Republic";
+    static final String F_POSTAL_CODE = "Zip/Postal Code";
+    static final String F_COUNTRY = "Country";
+    static final String F_COUNTRY_CODE = "Country Code";
+    static final String F_PHONE_NUMBER = "Contact Phone Number";
+    static final String F_BALANCE_IMPACT = "Balance Impact";
 
-    public static final String DATE_FORMAT = "M/d/yyyy";
+    private static final String DATE_FORMAT = "M/d/yyyy";
 
     @JsonProperty(value = F_DATE, required = true)
     @JsonFormat(pattern = DATE_FORMAT)
@@ -89,7 +87,7 @@ public class TransactionV2 {
     private String type;
 
     @JsonProperty(value = F_STATUS, required = true)
-    private StatusV2 status;
+    private Status status;
 
     @JsonProperty(F_SUBJECT)
     private String subject;
@@ -274,11 +272,11 @@ public class TransactionV2 {
         this.type = type;
     }
 
-    public StatusV2 getStatus() {
+    public Status getStatus() {
         return status;
     }
 
-    public void setStatus(StatusV2 status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
