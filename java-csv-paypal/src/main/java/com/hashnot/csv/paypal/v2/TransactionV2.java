@@ -1,9 +1,10 @@
-package com.hashnot.csv.paypal;
+package com.hashnot.csv.paypal.v2;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.hashnot.csv.paypal.Direction;
 import com.hashnot.csv.paypal.convert.BigDecimalDeserializer;
 import com.hashnot.csv.paypal.convert.StatusDeserializer;
 
@@ -12,21 +13,21 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.TimeZone;
 
-import static com.hashnot.csv.paypal.Transaction.*;
+import static com.hashnot.csv.paypal.v2.TransactionV2.*;
 
 /**
  * @author Rafał Krupiński
  */
 @JsonPropertyOrder({
-        F_DATE, F_TIME, F_TIME_ZONE, F_NAME, F_TYPE, F_STATUS, F_SUBJECT, F_CURRENCY, F_GROSS, F_FEE, F_NET, F_NOTE,
-        F_FROM_EMAIL_ADDRESS, F_TO_EMAIL_ADDRESS, F_TRANSACTION_ID, F_PAYMENT_TYPE, F_COUNTERPARTY_STATUS,
-        F_ADDRESS_STATUS, F_ITEM_TITLE, F_ITEM_ID, F_SHIPPING_AMOUNT, F_INSURANCE_AMOUNT, F_SALES_TAX, F_TIP,
-        F_DISCOUNT, F_OPTION_1_NAME, F_OPTION_1_VALUE, F_OPTION_2_NAME, F_OPTION_2_VALUE, F_AUCTION_SITE, F_BUYER_ID,
-        F_ITEM_URL, F_CLOSING_DATE, F_REFERENCE_TXN, F_INVOICE_NUMBER, F_SUBSCRIPTION_NUMBER, F_CUSTOM_NUMBER,
-        F_RECEIPT_ID, F_BALANCE, F_ADDRESS_LINE_1, F_ADDRESS_LINE_2, F_CITY, F_REGION, F_POSTAL_CODE, F_COUNTRY,
-        F_PHONE_NUMBER, F_BALANCE_IMPACT
+        F_DATE, F_TIME, F_TIME_ZONE, F_NAME, F_TYPE, F_STATUS, F_CURRENCY, F_GROSS, F_FEE, F_NET,
+        F_FROM_EMAIL_ADDRESS, F_TO_EMAIL_ADDRESS, F_TRANSACTION_ID, F_SHIPPING_ADDRESS,
+        F_ADDRESS_STATUS, F_ITEM_TITLE, F_ITEM_ID, F_SHIPPING_AMOUNT, F_INSURANCE_AMOUNT, F_SALES_TAX,
+        F_OPTION_1_NAME, F_OPTION_1_VALUE, F_OPTION_2_NAME, F_OPTION_2_VALUE,
+        F_REFERENCE_TXN, F_INVOICE_NUMBER, F_CUSTOM_NUMBER,
+        F_QUANTITY, F_RECEIPT_ID, F_BALANCE, F_ADDRESS_LINE_1, F_ADDRESS_LINE_2, F_CITY, F_REGION, F_POSTAL_CODE, F_COUNTRY,
+        F_PHONE_NUMBER, F_SUBJECT, F_NOTE, F_COUNTRY_CODE, F_BALANCE_IMPACT
 })
-public class Transaction {
+public class TransactionV2 {
     public static final String F_DATE = "Date";
     public static final String F_TIME = "Time";
     public static final String F_TIME_ZONE = "Time Zone";
@@ -42,28 +43,21 @@ public class Transaction {
     public static final String F_FROM_EMAIL_ADDRESS = "From Email Address";
     public static final String F_TO_EMAIL_ADDRESS = "To Email Address";
     public static final String F_TRANSACTION_ID = "Transaction ID";
-    public static final String F_PAYMENT_TYPE = "Payment Type";
-    public static final String F_COUNTERPARTY_STATUS = "Counterparty Status";
+    public static final String F_SHIPPING_ADDRESS = "Shipping Address";
     public static final String F_ADDRESS_STATUS = "Address Status";
     public static final String F_ITEM_TITLE = "Item title";
     public static final String F_ITEM_ID = "Item ID";
     public static final String F_SHIPPING_AMOUNT = "Shipping and Handling Amount";
     public static final String F_INSURANCE_AMOUNT = "Insurance Amount";
     public static final String F_SALES_TAX = "Sales Tax";
-    public static final String F_TIP = "Tip";
-    public static final String F_DISCOUNT = "Discount";
     public static final String F_OPTION_1_NAME = "Option 1 Name";
     public static final String F_OPTION_1_VALUE = "Option 1 Value";
     public static final String F_OPTION_2_NAME = "Option 2 Name";
     public static final String F_OPTION_2_VALUE = "Option 2 Value";
-    public static final String F_AUCTION_SITE = "Auction Site";
-    public static final String F_BUYER_ID = "Buyer ID";
-    public static final String F_ITEM_URL = "Item URL";
-    public static final String F_CLOSING_DATE = "Closing Date";
     public static final String F_REFERENCE_TXN = "Reference Txn";
     public static final String F_INVOICE_NUMBER = "Invoice Number";
-    public static final String F_SUBSCRIPTION_NUMBER = "Subscription Number";
     public static final String F_CUSTOM_NUMBER = "Custom Number";
+    public static final String F_QUANTITY = "Quantity";
     public static final String F_RECEIPT_ID = "Receipt ID";
     public static final String F_BALANCE = "Balance";
     public static final String F_ADDRESS_LINE_1 = "Address Line 1";
@@ -72,15 +66,17 @@ public class Transaction {
     public static final String F_REGION = "State/Province/Region/County/Territory/Prefecture/Republic";
     public static final String F_POSTAL_CODE = "Zip/Postal Code";
     public static final String F_COUNTRY = "Country";
+    public static final String F_COUNTRY_CODE = "Country Code";
     public static final String F_PHONE_NUMBER = "Contact Phone Number";
     public static final String F_BALANCE_IMPACT = "Balance Impact";
-    public static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    public static final String DATE_FORMAT = "M/d/yyyy";
 
     @JsonProperty(value = F_DATE, required = true)
     @JsonFormat(pattern = DATE_FORMAT)
     private LocalDate date;
 
-    @JsonProperty(value = F_TIME, required = false)
+    @JsonProperty(value = F_TIME, required = true)
     private LocalTime time;
 
     @JsonProperty(value = F_TIME_ZONE, required = true)
@@ -93,8 +89,7 @@ public class Transaction {
     private String type;
 
     @JsonProperty(value = F_STATUS, required = true)
-    @JsonDeserialize(using = StatusDeserializer.class)
-    private Status status;
+    private StatusV2 status;
 
     @JsonProperty(F_SUBJECT)
     private String subject;
@@ -129,11 +124,8 @@ public class Transaction {
     @JsonProperty(value = F_TRANSACTION_ID, required = true)
     private String txId;
 
-    @JsonProperty(F_PAYMENT_TYPE)
-    private String paymentType;
-
-    @JsonProperty(F_COUNTERPARTY_STATUS)
-    private String counterpartyStatus;
+    @JsonProperty(F_SHIPPING_ADDRESS)
+    private String shippingAddress;
 
     @JsonProperty(F_ADDRESS_STATUS)
     private String addressStatus;
@@ -159,16 +151,6 @@ public class Transaction {
     @JsonFormat(pattern = "#,##0.0#")
     private BigDecimal salesTax;
 
-    @JsonProperty(F_TIP)
-    @JsonDeserialize(using = BigDecimalDeserializer.class)
-    @JsonFormat(pattern = "#,##0.0#")
-    private BigDecimal tip;
-
-    @JsonProperty(F_DISCOUNT)
-    @JsonDeserialize(using = BigDecimalDeserializer.class)
-    @JsonFormat(pattern = "#,##0.0#")
-    private BigDecimal discount;
-
     @JsonProperty(F_OPTION_1_NAME)
     private String option1Name;
 
@@ -181,30 +163,17 @@ public class Transaction {
     @JsonProperty(F_OPTION_2_VALUE)
     private String option2Value;
 
-    @JsonProperty(F_AUCTION_SITE)
-    private String auctionSite;
-
-    @JsonProperty(F_BUYER_ID)
-    private String buyerId;
-
-    @JsonProperty(F_ITEM_URL)
-    private String itemUrl;
-
-    @JsonProperty(F_CLOSING_DATE)
-    @JsonFormat(pattern = DATE_FORMAT)
-    private LocalDate closingDate;
-
     @JsonProperty(F_REFERENCE_TXN)
     private String refTxId;
 
     @JsonProperty(F_INVOICE_NUMBER)
     private String invoiceNo;
 
-    @JsonProperty(F_SUBSCRIPTION_NUMBER)
-    private String subscriptionNumber;
-
     @JsonProperty(F_CUSTOM_NUMBER)
     private String customNumber;
+
+    @JsonProperty(F_QUANTITY)
+    private Integer quantity;
 
     @JsonProperty(F_RECEIPT_ID)
     private String receiptId;
@@ -235,8 +204,35 @@ public class Transaction {
     @JsonProperty(F_PHONE_NUMBER)
     private String phoneNumber;
 
+    @JsonProperty(F_COUNTRY_CODE)
+    private String countryCode;
+
     @JsonProperty(value = F_BALANCE_IMPACT, required = true)
     private Direction balanceImpact;
+
+    public String getShippingAddress() {
+        return shippingAddress;
+    }
+
+    public void setShippingAddress(String shippingAddress) {
+        this.shippingAddress = shippingAddress;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
+    }
+
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
+    }
 
     public LocalDate getDate() {
         return date;
@@ -278,11 +274,11 @@ public class Transaction {
         this.type = type;
     }
 
-    public Status getStatus() {
+    public StatusV2 getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(StatusV2 status) {
         this.status = status;
     }
 
@@ -358,22 +354,6 @@ public class Transaction {
         this.txId = txId;
     }
 
-    public String getPaymentType() {
-        return paymentType;
-    }
-
-    public void setPaymentType(String paymentType) {
-        this.paymentType = paymentType;
-    }
-
-    public String getCounterpartyStatus() {
-        return counterpartyStatus;
-    }
-
-    public void setCounterpartyStatus(String counterpartyStatus) {
-        this.counterpartyStatus = counterpartyStatus;
-    }
-
     public String getAddressStatus() {
         return addressStatus;
     }
@@ -422,22 +402,6 @@ public class Transaction {
         this.salesTax = salesTax;
     }
 
-    public BigDecimal getTip() {
-        return tip;
-    }
-
-    public void setTip(BigDecimal tip) {
-        this.tip = tip;
-    }
-
-    public BigDecimal getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(BigDecimal discount) {
-        this.discount = discount;
-    }
-
     public String getOption1Name() {
         return option1Name;
     }
@@ -470,38 +434,6 @@ public class Transaction {
         this.option2Value = option2Value;
     }
 
-    public String getAuctionSite() {
-        return auctionSite;
-    }
-
-    public void setAuctionSite(String auctionSite) {
-        this.auctionSite = auctionSite;
-    }
-
-    public String getBuyerId() {
-        return buyerId;
-    }
-
-    public void setBuyerId(String buyerId) {
-        this.buyerId = buyerId;
-    }
-
-    public String getItemUrl() {
-        return itemUrl;
-    }
-
-    public void setItemUrl(String itemUrl) {
-        this.itemUrl = itemUrl;
-    }
-
-    public LocalDate getClosingDate() {
-        return closingDate;
-    }
-
-    public void setClosingDate(LocalDate closingDate) {
-        this.closingDate = closingDate;
-    }
-
     public String getRefTxId() {
         return refTxId;
     }
@@ -516,14 +448,6 @@ public class Transaction {
 
     public void setInvoiceNo(String invoiceNo) {
         this.invoiceNo = invoiceNo;
-    }
-
-    public String getSubscriptionNumber() {
-        return subscriptionNumber;
-    }
-
-    public void setSubscriptionNumber(String subscriptionNumber) {
-        this.subscriptionNumber = subscriptionNumber;
     }
 
     public String getCustomNumber() {

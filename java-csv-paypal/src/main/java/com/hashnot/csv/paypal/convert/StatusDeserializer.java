@@ -3,7 +3,7 @@ package com.hashnot.csv.paypal.convert;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.hashnot.csv.paypal.Transaction.Status;
+import com.hashnot.csv.paypal.Status;
 
 import java.io.IOException;
 
